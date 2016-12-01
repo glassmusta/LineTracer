@@ -33,52 +33,52 @@ void loop() {
   if(status){
     if(readPins[0] ==LOW && readPins[1] == LOW && readPins[2] == LOW && readPins[3] ==LOW){
       goFoward();
-      Serial.println("1111");
+      Serial.println("0000");
     }
     else if(readPins[0]==LOW && readPins[1]==LOW || readPins[2] ==LOW)
     {
-      Serial.println("1110");
-      turn(100,10);      
+      Serial.println("0001");
+      turn(60,10);      
     }
     else if(readPins[2]==LOW && readPins[3]==LOW || readPins[1] ==LOW)
     {
-      Serial.println("0111");
-      turn(10,100);
+      Serial.println("1000");
+      turn(10,60);
     }
      else if(readPins[1] ==LOW && readPins[2]==LOW)
     {
-      Serial.println("0110");
+      Serial.println("1001");
       goFoward();
     }
     else if(readPins[0]==LOW)  // 맨 오른쪽 센서(A0)에 라인이 감지된 경우
     {
-      Serial.println("1000");
-      turn(20,100);
+      Serial.println("0111");
+      turn(10,60);
     }
     else if(readPins[3]==LOW)  // 맨 왼쪽 센서(A5)에 라인이 감지된 경우
     {
-      Serial.println("0001");
-      turn(80,30);
+      Serial.println("1110");
+      turn(60,10);
     }
     else if(readPins[1]==LOW)  // 오른쪽에서 두 번째 센서(A1)에 라인이 감지된 경우
     {
-      Serial.println("0100");
-      turn(30,80); 
+      Serial.println("1011");
+      turn(25,55); 
     }
     else if(readPins[2]==LOW)  // 왼쪽에서 두 번째 센서(A4)에 라인이 감지된 경우
     {
-      Serial.println("0010");
-      turn(100,20);
+      Serial.println("1101");
+      turn(55,25);
     }
     else{
-      Serial.println("0000");
+      Serial.println("1111");
       goFoward();
     }
   }else if(status == false){
     Stop();
   }
   //알고리즘 끝
-  delay(30);
+  delay(50);
    
   }
 
@@ -87,8 +87,8 @@ void Stop(){
     digitalWrite(E1,LOW);
 }
 void goFoward(){
-    analogWrite(E1,100);
-    analogWrite(E2,100);
+    analogWrite(E1,60);
+    analogWrite(E2,60);
 }
 void turn(int l,int r){
     analogWrite(E1,l);
