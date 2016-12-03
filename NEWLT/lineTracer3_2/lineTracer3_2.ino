@@ -21,7 +21,10 @@ void setup() {
   
 }
 
+//가장 안정적인 모델
 //140 ok
+//220 no
+//200 no
 void loop() {
   for(int i=0;i<4;++i){
     readPins[i] = digitalRead(pins[i]);
@@ -43,22 +46,22 @@ void loop() {
     if(readPins[0] ==LOW)  // 맨 오른쪽 센서(A0)에 라인이 감지된 경우
     {
       Serial.println("0111");
-      turn(150,200,HIGH,HIGH);
+      turn(20,120,HIGH,HIGH);
     }
     else if(readPins[3] ==LOW)  // 맨 왼쪽 센서(A5)에 라인이 감지된 경우
     {
       Serial.println("1110");
-      turn(200,150,LOW,LOW);
+      turn(120,20,LOW,LOW);
     }
     else if(readPins[1] ==LOW)  // 오른쪽에서 두 번째 센서(A1)에 라인이 감지된 경우
     {
       Serial.println("1011");
-      turn(165,195,LOW,HIGH); 
+      turn(60,100,LOW,HIGH); 
     }
     else if(readPins[2] ==LOW)  // 왼쪽에서 두 번째 센서(A4)에 라인이 감지된 경우
     {
       Serial.println("1101");
-      turn(195,165,LOW,HIGH);
+      turn(100,60,LOW,HIGH);
     }
     else
     {
@@ -78,8 +81,8 @@ void Stop(){
     digitalWrite(E1,LOW);
 }
 void goFoward(){
-    analogWrite(E1,200);
-    analogWrite(E2,200);
+    analogWrite(E1,120);
+    analogWrite(E2,120);
 }
 void turn(int l,int r,bool l2 ,bool r2 ){
     digitalWrite(M1,l2);
