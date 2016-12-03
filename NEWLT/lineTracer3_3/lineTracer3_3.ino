@@ -6,6 +6,7 @@
 int pins[4] = {9,10,11,12};
 bool readPins[4];
 int runState = 0;
+int perference = 0 ;
 bool status = false;
 bool swStatus = true;
 int delayTime = 1000;
@@ -25,6 +26,16 @@ void loop() {
   for(int i=0;i<4;++i){
     readPins[i] = digitalRead(pins[i]);
   }
+  
+  if(readPins[3] == LOW){
+    perference = 1;
+  }else if(readPins[3] ==HIGH && perference == 1){
+    perference = 0;
+  }else if(readPins[0] == HIGH && perference == -1){
+    perference = 0;
+  }else if(readPins[0] ==LOW){
+    perference = -1;
+  }
 
   if(digitalRead(8) == LOW && swStatus == true){
     status = !status;
@@ -36,32 +47,23 @@ void loop() {
   if(status){
      if((readPins[0] == HIGH && readPins[1]==HIGH && readPins[2]==HIGH && readPins[3]==HIGH)  || (readPins[0] == HIGH && readPins[1] == LOW && readPins[2] == LOW && readPins[3] == HIGH))
     {
-      Serial.println("go");
       goFoward();
     }else
-    if(readPins[0] ==LOW )  // 맨 오른쪽 센서(A0)에 라인이 감지된 경우
+    if(readPins[0] ==LOW || readPins[3] == LOW)  // 맨 오른쪽 센서(A0)에 라인이 감지된 경우
     {
-      Serial.println("0111");
-      turn(70,120,HIGH,HIGH);
-    }
-    else if(readPins[3] ==LOW)  // 맨 왼쪽 센서(A5)에 라인이 감지된 경우
-    {
-      Serial.println("1110");
-      turn(120,70,LOW,LOW);
+      if(perference == -1) turn(70,120,HIGH,HIGH);
+      else if(perference == 1)turn(120,70,LOW,LOW);
     }
     else if(readPins[1] ==LOW)  // 오른쪽에서 두 번째 센서(A1)에 라인이 감지된 경우
     {
-      Serial.println("1011");
       turn(90,120,LOW,HIGH); 
     }
     else if(readPins[2] ==LOW)  // 왼쪽에서 두 번째 센서(A4)에 라인이 감지된 경우
     {
-      Serial.println("1101");
       turn(120,90,LOW,HIGH);
     }
     else
     {
-      Serial.println("WhatEver");
       turn(120,70,LOW,LOW);
     }
   }else if(status == false){
